@@ -6,6 +6,7 @@
   <div>
     <SectionsHero />
     <SectionsSkillsBento />
+    <SectionsArchitecturePlayground />
     
     <SectionsGoToProjects />
     <SectionsJobExpertese />

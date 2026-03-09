@@ -165,7 +165,7 @@ onMounted(() => {
   top: 4rem;
   left: 50%;
   transform: translateX(-50%) scaleY(1.4);
-  font-size: clamp(5rem, 18vw, 22rem);
+  font-size: clamp(6rem, 22vw, 28rem);
   font-weight: 900;
   line-height: 0.8;
   text-align: center;
@@ -333,7 +333,7 @@ onMounted(() => {
 
 .card-period {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -343,7 +343,7 @@ onMounted(() => {
 
 .card-role {
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: 1.35rem;
   font-weight: 700;
   color: var(--color-text-primary);
   margin: 0.35rem 0 0.2rem;
@@ -352,14 +352,14 @@ onMounted(() => {
 
 .card-company {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.88rem;
   color: var(--color-text-muted);
   letter-spacing: 0.03em;
 }
 
 .card-description {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.88rem;
   line-height: 1.7;
   color: var(--color-text-secondary);
   margin: 0.75rem 0;

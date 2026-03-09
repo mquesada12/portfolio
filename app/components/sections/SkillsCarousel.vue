@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useVariantStore } from '~/stores/variant'
 import { useVariantContent } from '~/composables/useVariantContent'
-import type { PortfolioVariant } from '~/stores/variant'
+
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Autoplay } from 'swiper/modules'
 import 'swiper/css'
@@ -11,9 +11,7 @@ const { techStack } = useVariantContent()
 
 const modules = [Autoplay]
 
-function selectVariant(variant: PortfolioVariant) {
-  variantStore.setVariant(variant)
-}
+
 </script>
 
 <template>

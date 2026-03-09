@@ -1,0 +1,49 @@
+﻿app/components/sections/ArchitecturePlayground.vue(139,9): error TS2532: Object is possibly 'undefined'.
+app/components/sections/ArchitecturePlayground.vue(139,22): error TS2532: Object is possibly 'undefined'.
+app/components/sections/ArchitecturePlayground.vue(140,9): error TS2532: Object is possibly 'undefined'.
+app/components/sections/ArchitecturePlayground.vue(140,22): error TS2532: Object is possibly 'undefined'.
+node.exe : 
+En línea: 1 Carácter: 1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Users\manue\AppData\Roaming\ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpec 
+   ified: (:String) [], RemoteExcept  
+  ion
+    + FullyQualifiedErrorId : NativeC 
+   ommandError
+ 
+[41m[30m ERROR [39m[49m Process 
+exited with non-zero status (2)
+
+    [90mat [39mG._waitForOutput ([3
+6m/C:/Development/Demos/portfolio/node
+_modules/.pnpm/tinyexec@1.0.2/node_mod
+ules/tinyexec/dist/main.js:574:92[39m
+)
+    [90mat [39mprocess.processTicksA
+ndRejections ([36mnode:internal/proce
+ss/task_queues:105:5[39m)
+    [90mat [39masync Object.run ([3
+6m/C:/Development/Demos/portfolio/node
+_modules/.pnpm/@nuxt+cli@3.33.1_@nuxt+
+sche_07dffa47d869082a289461305cc3535c/
+node_modules/@nuxt/cli/dist/typecheck-
+C8wVgBzd.mjs:37:52[39m)
+    [90mat [39masync runCommand ([3
+6m/C:/Development/Demos/portfolio/node
+_modules/.pnpm/citty@0.2.1/node_module
+s/citty/dist/index.mjs:188:47[39m)
+    [90mat [39masync runCommand ([3
+6m/C:/Development/Demos/portfolio/node
+_modules/.pnpm/citty@0.2.1/node_module
+s/citty/dist/index.mjs:185:21[39m)
+    [90mat [39masync runMain ([36m/
+C:/Development/Demos/portfolio/node_mo
+dules/.pnpm/citty@0.2.1/node_modules/c
+itty/dist/index.mjs:285:10[39m) 
+
+
+

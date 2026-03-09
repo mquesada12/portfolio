@@ -1,0 +1,58 @@
+﻿
+C:\Development\Demos\portfolio\app\components\Alert.vue
+  1:1   error    Component name "Alert" should always be multi-word  vue/multi-word-component-names
+  3:11  warning  Require self-closing on HTML elements (<slot>)      vue/html-self-closing
+
+C:\Development\Demos\portfolio\app\components\Counter.vue
+  1:1  error  Component name "Counter" should always be multi-word  vue/multi-word-component-names
+
+C:\Development\Demos\portfolio\app\components\LanguageSwitcher.vue
+  2:26  error  'setLocale' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Development\Demos\portfolio\app\components\sections\Hero.vue
+   7:31  error    'codeSnippet' is assigned a value but never used. Allowed unused vars must match /^_/u       @typescript-eslint/no-unused-vars
+   7:44  error    'panelDescription' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  30:11  warning  Require self-closing on HTML elements (<div>)                                                vue/html-self-closing
+  32:11  warning  Require self-closing on HTML elements (<div>)                                                vue/html-self-closing
+
+C:\Development\Demos\portfolio\app\components\sections\Projects.vue
+  67:29  warning  Attribute "id" should go before "ref"  vue/attributes-order
+
+C:\Development\Demos\portfolio\app\components\sections\SkillsCarousel.vue
+  14:10  error  'selectVariant' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Development\Demos\portfolio\app\components\ui\BentoCard.vue
+  4:3  warning  Prop 'description' requires default value to be set  vue/require-default-prop
+  5:3  warning  Prop 'icon' requires default value to be set         vue/require-default-prop
+
+C:\Development\Demos\portfolio\app\components\ui\PostmanSimulator.vue
+   12:7  error    'methods' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  141:9  warning  Disallow self-closing on HTML void elements (<input/>)                              vue/html-self-closing
+
+C:\Development\Demos\portfolio\app\components\ui\ProjectTemplate.vue
+  17:20  error    'isSwiping' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  17:31  error    'lengthX' is assigned a value but never used. Allowed unused vars must match /^_/u    @typescript-eslint/no-unused-vars
+  17:40  error    'lengthY' is assigned a value but never used. Allowed unused vars must match /^_/u    @typescript-eslint/no-unused-vars
+  37:7   warning  Disallow self-closing on HTML void elements (<img/>)                                  vue/html-self-closing
+  38:45  warning  Require self-closing on HTML elements (<div>)                                         vue/html-self-closing
+
+C:\Development\Demos\portfolio\app\composables\useSupabaseData.ts
+  1:59  error  'RoleType' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Development\Demos\portfolio\app\pages\contact.vue
+   56:19  error    Unexpected any. Specify a different type                @typescript-eslint/no-explicit-any
+  106:15  warning  Disallow self-closing on HTML void elements (<input/>)  vue/html-self-closing
+  120:15  warning  Disallow self-closing on HTML void elements (<input/>)  vue/html-self-closing
+  135:13  warning  Disallow self-closing on HTML void elements (<input/>)  vue/html-self-closing
+
+C:\Development\Demos\portfolio\app\stores\skillsSimulator.ts
+  168:31  error  Do not delete dynamically computed property keys  @typescript-eslint/no-dynamic-delete
+  215:17  error  Unexpected any. Specify a different type          @typescript-eslint/no-explicit-any
+
+C:\Development\Demos\portfolio\server\api\contact.post.ts
+  41:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+Ô£û 27 problems (15 errors, 12 warnings)
+  0 errors and 10 warnings potentially fixable with the `--fix` option.
+
+

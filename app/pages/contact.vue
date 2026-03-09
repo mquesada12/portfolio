@@ -20,7 +20,14 @@ const form = reactive<ContactForm>({
 
 const isSubmitting = ref(false)
 const isSubmitted = ref(false)
+const errorMessage = ref('')
 const focusedField = ref<string | null>(null)
+
+const socialLinks = [
+  { label: 'GitHub', url: 'https://github.com/mquesada12', icon: 'mdi:github' },
+  { label: 'LinkedIn', url: 'https://www.linkedin.com/in/manuelquesadaruiz/', icon: 'mdi:linkedin' },
+  { label: 'Email', url: 'mailto:manuelquesada213@gmail.com', icon: 'mdi:email-outline' },
+]
 
 function handleFocus(field: string) {
   focusedField.value = field
@@ -32,115 +39,139 @@ function handleBlur() {
 
 async function handleSubmit() {
   isSubmitting.value = true
+  errorMessage.value = ''
 
-  await new Promise((resolve) => setTimeout(resolve, 1200))
+  try {
+    await $fetch('/api/contact', {
+      method: 'POST',
+      body: {
+        name: form.name,
+        email: form.email,
+        subject: form.subject,
+        message: form.message,
+      },
+    })
 
-  isSubmitted.value = true
-  isSubmitting.value = false
+    isSubmitted.value = true
+  } catch (error: unknown) {
+    if (error && typeof error === 'object' && 'data' in error) {
+      const fetchError = error as { data?: { statusMessage?: string } }
+      errorMessage.value = fetchError.data?.statusMessage || 'Something went wrong. Please try again or email me directly.'
+    } else {
+      errorMessage.value = 'Something went wrong. Please try again or email me directly.'
+    }
+  } finally {
+    isSubmitting.value = false
+  }
 }
 </script>
 
 <template>
   <section class="contact-page">
-    <!-- Background watermark -->
-    <h2 class="contact-watermark">Contact</h2>
-
     <div class="contact-container">
 
-      <div class="contact-layout">
-        <!-- Left: Form -->
-        <div class="contact-form-wrapper">
-          <div class="section-label">
-            <span class="label-line" />
-            <span class="label-text">Get in Touch</span>
-          </div>
+      <!-- Header -->
+      <div class="contact-header">
+        <h1 class="contact-title">Get in touch<span class="title-dot">.</span></h1>
+        <p class="contact-subtitle">
+          Have a project in mind or just want to say hello?<br>
+          I'd love to hear from you.
+        </p>
 
-          <h1 class="contact-title">Let's work<br><span class="title-accent">together.</span></h1>
-
-          <p class="contact-subtitle">Have a project in mind? Drop me a message and I'll get back to you as soon as possible.</p>
-
-          <Transition name="fade" mode="out-in">
-            <div v-if="!isSubmitted" key="form">
-              <form class="contact-form" @submit.prevent="handleSubmit">
-                <div class="form-group" :class="{ focused: focusedField === 'name' }">
-                  <label for="name" class="form-label">Name</label>
-                  <input
-                    id="name"
-                    v-model="form.name"
-                    type="text"
-                    class="form-input"
-                    placeholder="Your name"
-                    required
-                    @focus="handleFocus('name')"
-                    @blur="handleBlur"
-                  />
-                </div>
-
-                <div class="form-group" :class="{ focused: focusedField === 'email' }">
-                  <label for="email" class="form-label">Email</label>
-                  <input
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    class="form-input"
-                    placeholder="your@email.com"
-                    required
-                    @focus="handleFocus('email')"
-                    @blur="handleBlur"
-                  />
-                </div>
-
-                <div class="form-group" :class="{ focused: focusedField === 'subject' }">
-                  <label for="subject" class="form-label">Subject</label>
-                  <input
-                    id="subject"
-                    v-model="form.subject"
-                    type="text"
-                    class="form-input"
-                    placeholder="Project inquiry"
-                    required
-                    @focus="handleFocus('subject')"
-                    @blur="handleBlur"
-                  />
-                </div>
-
-                <div class="form-group" :class="{ focused: focusedField === 'message' }">
-                  <label for="message" class="form-label">Message</label>
-                  <textarea
-                    id="message"
-                    v-model="form.message"
-                    class="form-input form-textarea"
-                    placeholder="Tell me about your project..."
-                    rows="5"
-                    required
-                    @focus="handleFocus('message')"
-                    @blur="handleBlur"
-                  />
-                </div>
-
-                <button type="submit" class="submit-btn" :disabled="isSubmitting">
-                  <span v-if="isSubmitting">Sending...</span>
-                  <span v-else>Send Message</span>
-                  <Icon v-if="!isSubmitting" name="mdi:arrow-right" class="btn-icon" />
-                </button>
-              </form>
-            </div>
-
-            <div v-else key="success" class="success-state">
-              <Icon name="mdi:check-circle-outline" class="success-icon" />
-              <h3 class="success-title">Message Sent!</h3>
-              <p class="success-text">Thank you for reaching out. I'll get back to you soon.</p>
-            </div>
-          </Transition>
-        </div>
-
-        <!-- Right: Portrait Image -->
-        <div class="contact-image">
-          <div class="image-card">
-            <img src="/images/contact-portrait.png" alt="Manuel Quesada - Developer" class="portrait-img" />
-          </div>
+        <div class="contact-socials">
+          <a
+            v-for="link in socialLinks"
+            :key="link.label"
+            :href="link.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-link"
+            :aria-label="link.label"
+          >
+            <Icon :name="link.icon" class="social-icon" />
+          </a>
         </div>
       </div>
+
+      <!-- Form / Success -->
+      <Transition name="fade" mode="out-in">
+        <form v-if="!isSubmitted" key="form" class="contact-form" @submit.prevent="handleSubmit">
+          <div class="form-row">
+            <div class="form-group" :class="{ focused: focusedField === 'name' }">
+              <label for="name" class="form-label">Name</label>
+              <input
+                id="name"
+                v-model="form.name"
+                type="text"
+                class="form-input"
+                placeholder="Your name"
+                required
+                @focus="handleFocus('name')"
+                @blur="handleBlur"
+              />
+            </div>
+
+            <div class="form-group" :class="{ focused: focusedField === 'email' }">
+              <label for="email" class="form-label">Email</label>
+              <input
+                id="email"
+                v-model="form.email"
+                type="email"
+                class="form-input"
+                placeholder="your@email.com"
+                required
+                @focus="handleFocus('email')"
+                @blur="handleBlur"
+              />
+            </div>
+          </div>
+
+          <div class="form-group" :class="{ focused: focusedField === 'subject' }">
+            <label for="subject" class="form-label">Subject</label>
+            <input
+              id="subject"
+              v-model="form.subject"
+              type="text"
+              class="form-input"
+              placeholder="Project inquiry"
+              required
+              @focus="handleFocus('subject')"
+              @blur="handleBlur"
+            />
+          </div>
+
+          <div class="form-group" :class="{ focused: focusedField === 'message' }">
+            <label for="message" class="form-label">Message</label>
+            <textarea
+              id="message"
+              v-model="form.message"
+              class="form-input form-textarea"
+              placeholder="Tell me about your project..."
+              rows="6"
+              required
+              @focus="handleFocus('message')"
+              @blur="handleBlur"
+            />
+          </div>
+
+          <div v-if="errorMessage" class="form-error">
+            <Icon name="mdi:alert-circle-outline" class="error-icon" />
+            <span>{{ errorMessage }}</span>
+            <a href="mailto:manuelquesada213@gmail.com" class="error-fallback">Email me directly →</a>
+          </div>
+
+          <button type="submit" class="submit-btn" :disabled="isSubmitting">
+            <span v-if="isSubmitting" class="spinner" />
+            <span>{{ isSubmitting ? 'Sending...' : 'Send Message' }}</span>
+          </button>
+        </form>
+
+        <div v-else key="success" class="success-state">
+          <Icon name="mdi:check-circle-outline" class="success-icon" />
+          <h3 class="success-title">Message sent</h3>
+          <p class="success-text">Thank you for reaching out. I'll get back to you soon.</p>
+        </div>
+      </Transition>
 
     </div>
   </section>
@@ -148,101 +179,88 @@ async function handleSubmit() {
 
 <style scoped>
 .contact-page {
-  position: relative;
   min-height: 100vh;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 8rem 0 6rem;
   background-color: var(--color-bg-primary);
-  overflow: hidden;
-}
-
-.contact-watermark {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scaleY(1.4);
-  font-size: clamp(6rem, 22vw, 30rem);
-  font-weight: 900;
-  line-height: 0.8;
-  text-align: center;
-  text-transform: uppercase;
-  font-family: var(--font-display);
-  color: var(--variant-accent);
-  opacity: 0.04;
-  pointer-events: none;
-  white-space: nowrap;
-  z-index: 0;
-  transition: color var(--transition-theme);
 }
 
 .contact-container {
-  position: relative;
-  z-index: 1;
-  max-width: var(--container-max);
+  width: 100%;
+  max-width: 620px;
   margin: 0 auto;
   padding-inline: var(--container-padding);
 }
 
-.contact-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
+/* Header */
+.contact-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
 }
 
-/* Section Label */
-.section-label {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.label-line {
-  width: 2rem;
-  height: 1px;
-  background: var(--variant-accent);
-  transition: background var(--transition-theme);
-}
-
-.label-text {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--variant-accent);
-  transition: color var(--transition-theme);
-}
-
-/* Title */
 .contact-title {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 800;
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 700;
   color: var(--color-text-primary);
-  margin-bottom: 1rem;
-  line-height: 1.1;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
 }
 
-.title-accent {
+.title-dot {
   color: var(--variant-accent);
-  transition: color var(--transition-theme);
 }
 
 .contact-subtitle {
   font-family: var(--font-mono);
-  font-size: 0.85rem;
-  line-height: 1.7;
+  font-size: 0.82rem;
+  line-height: 1.8;
   color: var(--color-text-muted);
-  margin-bottom: 2.5rem;
-  max-width: 400px;
+}
+
+.contact-socials {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.social-link:hover {
+  color: var(--variant-accent);
+  border-color: var(--variant-accent);
+}
+
+.social-icon {
+  width: 1.05rem;
+  height: 1.05rem;
 }
 
 /* Form */
 .contact-form {
   display: flex;
   flex-direction: column;
+  gap: 1.75rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
 }
 
@@ -253,13 +271,13 @@ async function handleSubmit() {
 .form-label {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-text-muted);
   margin-bottom: 0.5rem;
-  transition: color 0.3s ease;
+  transition: color 0.2s ease;
 }
 
 .form-group.focused .form-label {
@@ -270,13 +288,14 @@ async function handleSubmit() {
   width: 100%;
   font-family: var(--font-mono);
   font-size: 0.85rem;
-  padding: 0.75rem 0;
+  padding: 0.65rem 0;
   background: transparent;
   border: none;
   border-bottom: 1px solid var(--color-border);
   color: var(--color-text-primary);
-  transition: border-color 0.3s ease;
+  transition: border-color 0.2s ease;
   outline: none;
+  border-radius: 0;
 }
 
 .form-input:focus {
@@ -285,75 +304,104 @@ async function handleSubmit() {
 
 .form-input::placeholder {
   color: var(--color-text-muted);
-  opacity: 0.5;
+  opacity: 0.4;
 }
 
 .form-textarea {
   resize: vertical;
-  min-height: 100px;
+  min-height: 120px;
 }
 
+/* Error */
+.form-error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #ef4444;
+}
+
+.error-icon {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.error-fallback {
+  color: var(--color-text-muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  margin-left: 0.25rem;
+}
+
+.error-fallback:hover {
+  color: var(--color-text-primary);
+}
+
+/* Submit */
 .submit-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
+  justify-content: center;
+  gap: 0.6rem;
   font-family: var(--font-mono);
   font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-weight: 600;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  padding: 0.85rem 2rem;
-  background: transparent;
-  color: var(--color-text-primary);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-full);
+  padding: 0.85rem 2.5rem;
+  background: var(--variant-accent);
+  color: var(--color-bg-primary);
+  border: none;
   cursor: pointer;
   transition: all 0.3s ease;
   align-self: flex-start;
 }
 
 .submit-btn:hover {
-  border-color: var(--variant-accent);
-  color: var(--variant-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(var(--variant-accent-rgb), 0.3);
 }
 
 .submit-btn:disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
-.btn-icon {
-  width: 1rem;
-  height: 1rem;
-  transition: transform 0.3s ease;
+/* Spinner */
+.spinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--color-bg-primary);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.5s linear infinite;
 }
 
-.submit-btn:hover .btn-icon {
-  transform: translateX(4px);
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 /* Success */
 .success-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   text-align: center;
-  padding: 3rem 0;
+  padding: 4rem 0;
 }
 
 .success-icon {
-  width: 3rem;
-  height: 3rem;
-  color: #22c55e;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--variant-accent);
   margin-bottom: 1rem;
 }
 
 .success-title {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: var(--color-text-primary);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .success-text {
@@ -363,34 +411,10 @@ async function handleSubmit() {
   line-height: 1.6;
 }
 
-/* Right: Image */
-.contact-image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.image-card {
-  width: 100%;
-  max-width: 480px;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  border: 1px solid var(--color-border);
-  background: var(--color-bg-secondary);
-  transition: border-color var(--transition-theme);
-}
-
-.portrait-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-}
-
 /* Transitions */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.4s ease;
+  transition: opacity 0.3s ease;
 }
 
 .fade-enter-from,
@@ -398,22 +422,19 @@ async function handleSubmit() {
   opacity: 0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .contact-page {
     padding: 6rem 0 4rem;
+    align-items: flex-start;
   }
 
-  .contact-layout {
+  .form-row {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.75rem;
   }
 
-  .contact-image {
-    order: -1;
-  }
-
-  .image-card {
-    max-width: 300px;
+  .submit-btn {
+    width: 100%;
   }
 }
 </style>

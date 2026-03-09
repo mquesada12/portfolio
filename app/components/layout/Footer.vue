@@ -2,9 +2,9 @@
 const currentYear = new Date().getFullYear()
 const route = useRoute()
 const socialLinks = [
-  { label: 'GitHub', url: 'https://github.com/', icon: 'mdi:github' },
-  { label: 'LinkedIn', url: 'https://linkedin.com/', icon: 'mdi:linkedin' },
-  { label: 'Email', url: 'mailto:hello@example.com', icon: 'mdi:email-outline' },
+  { label: 'GitHub', url: 'https://github.com/mquesada12', icon: 'mdi:github' },
+  { label: 'LinkedIn', url: 'https://www.linkedin.com/in/manuelquesadaruiz/', icon: 'mdi:linkedin' },
+  { label: 'Email', url: 'mailto:manuelquesada213@gmail.com', icon: 'mdi:email-outline' },
 ]
 </script>
 

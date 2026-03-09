@@ -21,7 +21,6 @@ const skillsList = computed(() => {
         name,
         icon: meta?.icon ?? '',
         desc: meta?.desc ?? '',
-        proficiency: meta?.proficiency ?? 0,
         tags: meta?.tags ?? [],
         contributions: meta?.contributions ?? [],
         experience: meta?.experience ?? '',
@@ -132,7 +131,6 @@ watch(skillsList, (newList) => {
             <UiBentoCard
               :title="skill.name"
               :icon="skill.icon"
-              :proficiency="skill.proficiency"
               :tags="skill.tags"
               :experience="skill.experience"
               :active="simulatorStore.selectedSkill === skill.name"
@@ -323,20 +321,6 @@ watch(skillsList, (newList) => {
   line-height: 1.1;
 }
 
-.proficiency-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.proficiency-value {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: var(--variant-accent);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
 
 .mini-bar {
   height: 3px;

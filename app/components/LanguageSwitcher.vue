@@ -1,5 +1,5 @@
 <script setup>
-const { locale, locales, setLocale } = useI18n()
+const { locale, locales } = useI18n()
 
 const switchLocalePath = useSwitchLocalePath()
 

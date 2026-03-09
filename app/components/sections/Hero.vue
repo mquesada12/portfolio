@@ -4,7 +4,7 @@ import { useVariantContent } from '~/composables/useVariantContent'
 import type { PortfolioVariant } from '~/stores/variant'
 
 const variantStore = useVariantStore()
-const { heroTitle, roleLabel, codeSnippet, panelDescription, tagline } = useVariantContent()
+const { heroTitle, roleLabel } = useVariantContent()
 
 function selectVariant(variant: PortfolioVariant) {
   variantStore.setVariant(variant)
@@ -26,12 +26,8 @@ function selectVariant(variant: PortfolioVariant) {
         <div class="hero-content-body-name">{{ heroTitle }}</div>
         
         <div class="hero-content-body-images flex flex-row w-full gap-4 p-2">
-          <div class="hero-content-body-images-left rounded-sm">
-            <pre class="code-panel"></pre>
-          </div>
-          <div class="hero-content-body-images-right rounded-sm">
-            <p class="panel-description"></p>
-          </div>
+          <div class="hero-content-body-images-left rounded-sm" />
+          <div class="hero-content-body-images-right rounded-sm" />
         </div>
       </div>
 

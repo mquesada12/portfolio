@@ -4,7 +4,6 @@ import { ref, computed } from 'vue'
 export interface SkillMeta {
   icon: string
   desc: string
-  proficiency: number
   tags: string[]
   contributions: string[]
   experience: string
@@ -14,47 +13,48 @@ const defaultSkillsData: Record<string, SkillMeta> = {
   'Vue 3': {
     icon: 'logos:vue',
     desc: 'Progressive JavaScript framework for building user interfaces.',
-    proficiency: 90,
     tags: ['Frontend', 'SPA', 'Reactive'],
     contributions: ['Component architecture', 'State management', 'Composables'],
-    experience: '+4 years',
+    experience: '+3 years',
   },
   'Nuxt JS': {
     icon: 'logos:nuxt-icon',
     desc: 'Full-stack framework built on Vue for server-side rendering.',
-    proficiency: 85,
     tags: ['SSR', 'Full Stack', 'Meta-framework'],
     contributions: ['SEO optimization', 'Server routes', 'Auto-imports'],
+    experience: '-1 years',
+  },
+  'React Native': {
+    icon: 'logos:react-icon',
+    desc: 'React framework for mobile applications.',
+    tags: ['React', 'Mobile', 'Full Stack'],
+    contributions: ['Components', 'API routes', 'hooks'],
     experience: '+3 years',
   },
   'Next JS': {
     icon: 'logos:nextjs-icon',
     desc: 'React framework for production-grade applications.',
-    proficiency: 80,
     tags: ['SSR', 'React', 'Full Stack'],
     contributions: ['App router', 'API routes', 'ISR'],
-    experience: '+2 years',
+    experience: '+3 years',
   },
   'TypeScript': {
     icon: 'logos:typescript-icon',
     desc: 'Typed superset of JavaScript for scalable applications.',
-    proficiency: 88,
-    tags: ['Language', 'Type Safety', 'DX'],
+    tags: ['Type Safety'],
     contributions: ['Type definitions', 'Generic patterns', 'Strict mode'],
     experience: '+4 years',
   },
   'Shopify': {
     icon: 'logos:shopify',
     desc: 'E-commerce platform with custom theme and app development.',
-    proficiency: 75,
     tags: ['E-commerce', 'Liquid', 'Storefront'],
     contributions: ['Theme development', 'App integrations', 'Performance'],
-    experience: '+1 year',
+    experience: '+2 years',
   },
   'Java': {
     icon: 'logos:java',
     desc: 'Enterprise-grade programming language for backend systems.',
-    proficiency: 70,
     tags: ['Backend', 'Enterprise', 'JVM'],
     contributions: ['REST APIs', 'Microservices', 'Spring Boot'],
     experience: '+2 years',
@@ -62,7 +62,6 @@ const defaultSkillsData: Record<string, SkillMeta> = {
   'Nest JS': {
     icon: 'logos:nestjs',
     desc: 'Progressive Node.js framework for scalable server-side apps.',
-    proficiency: 85,
     tags: ['Backend', 'Node.js', 'TypeScript'],
     contributions: ['REST & GraphQL APIs', 'Guards & Pipes', 'Microservices'],
     experience: '+3 years',
@@ -70,7 +69,6 @@ const defaultSkillsData: Record<string, SkillMeta> = {
   'PHP': {
     icon: 'logos:php',
     desc: 'Server-side scripting language for web development.',
-    proficiency: 85,
     tags: ['Backend', 'Server-side', 'Web'],
     contributions: ['API development', 'Legacy migration', 'Performance tuning'],
     experience: '+5 years',
@@ -78,26 +76,23 @@ const defaultSkillsData: Record<string, SkillMeta> = {
   'Symfony': {
     icon: 'logos:symfony',
     desc: 'PHP framework for web applications and reusable components.',
-    proficiency: 80,
     tags: ['PHP', 'Framework', 'Enterprise'],
     contributions: ['Bundle development', 'Doctrine ORM', 'Event system'],
-    experience: '+3 years',
+    experience: '+5 years',
   },
   'Laravel': {
     icon: 'logos:laravel',
     desc: 'Elegant PHP framework with expressive syntax.',
-    proficiency: 88,
     tags: ['PHP', 'Framework', 'Rapid Dev'],
     contributions: ['Eloquent models', 'Queue workers', 'Blade templates'],
-    experience: '+4 years',
+    experience: '+5 years',
   },
   'Docker': {
     icon: 'logos:docker-icon',
     desc: 'Container platform for building and deploying applications.',
-    proficiency: 75,
     tags: ['DevOps', 'Containers', 'CI/CD'],
     contributions: ['Multi-stage builds', 'Docker Compose', 'CI pipelines'],
-    experience: '+3 years',
+    experience: '+5 years',
   },
 }
 
@@ -193,7 +188,6 @@ export const useSkillsSimulatorStore = defineStore('skillsSimulator', () => {
           skills.value[name] = {
             icon: parsed.icon || '',
             desc: parsed.desc || '',
-            proficiency: parsed.proficiency || 0,
             tags: parsed.tags || [],
             contributions: parsed.contributions || [],
             experience: parsed.experience || '',
