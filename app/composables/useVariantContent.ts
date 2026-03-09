@@ -36,7 +36,8 @@ const contentMap: Record<string, VariantContent> = {
 }
 
 export function useVariantContent() {
-  const getStore = () => useVariantStore()
+  const { $pinia } = useNuxtApp()
+  const getStore = () => useVariantStore($pinia)
 
   const currentVariant = computed(() => getStore().active)
 

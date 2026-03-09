@@ -2,7 +2,11 @@
 import { useVariantStore } from "~/stores/variant";
 import { useTransitionDirection } from "~/composables/useTransitionDirection";
 
-const activeVariant = computed(() => useVariantStore().active);
+const el = ref<HTMLElement | null>(null);
+const activeVariant = computed(() => {
+  const { $pinia } = useNuxtApp();
+  return useVariantStore($pinia).active;
+});
 const { transitionName } = useTransitionDirection();
 </script>
 
