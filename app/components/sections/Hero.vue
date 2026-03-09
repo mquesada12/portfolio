@@ -3,11 +3,11 @@ import { useVariantStore } from '~/stores/variant'
 import { useVariantContent } from '~/composables/useVariantContent'
 import type { PortfolioVariant } from '~/stores/variant'
 
-const variantStore = useVariantStore()
+const activeVariant = computed(() => useVariantStore().active)
 const { heroTitle, roleLabel } = useVariantContent()
 
 function selectVariant(variant: PortfolioVariant) {
-  variantStore.setVariant(variant)
+  useVariantStore().setVariant(variant)
 }
 </script>
 
@@ -34,17 +34,17 @@ function selectVariant(variant: PortfolioVariant) {
       <div class="hero-content-bottom flex flex-row align-center justify-between w-full"> 
         <button 
           class="role-selector variant-backend"
-          :class="{ active: variantStore.active === 'backend' }"
+          :class="{ active: activeVariant === 'backend' }"
           @click="selectVariant('backend')"
         >BACKEND</button>
         <button 
           class="role-selector variant-frontend"
-          :class="{ active: variantStore.active === 'frontend' }"
+          :class="{ active: activeVariant === 'frontend' }"
           @click="selectVariant('frontend')"
         >FRONTEND</button>
         <button 
           class="role-selector variant-fullstack"
-          :class="{ active: variantStore.active === 'fullstack' }"
+          :class="{ active: activeVariant === 'fullstack' }"
           @click="selectVariant('fullstack')"
         >FULL STACK</button>
       </div>

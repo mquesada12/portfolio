@@ -7,16 +7,17 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const { techStack, panelDescription } = useVariantContent()
-const variantStore = useVariantStore()
-const simulatorStore = useSkillsSimulatorStore()
+const getVariantStore = () => useVariantStore()
+const getSimulatorStore = () => useSkillsSimulatorStore()
 const bentoContainer = ref<HTMLElement | null>(null)
 const hasEntered = ref(false)
 
 const skillsList = computed(() => {
+  const simulator = getSimulatorStore()
   return techStack.value
-    .filter((name: string) => !!simulatorStore.skills[name])
+    .filter((name: string) => !!simulator.skills[name])
     .map((name: string) => {
-      const meta = simulatorStore.skills[name]
+      const meta = simulator.skills[name]
       return {
         name,
         icon: meta?.icon ?? '',
@@ -28,18 +29,20 @@ const skillsList = computed(() => {
     })
 })
 
-const selectedSkillData = computed(() => simulatorStore.selectedSkillData)
+const selectedSkillData = computed(() => getSimulatorStore().selectedSkillData)
 
 function selectSkill(name: string) {
-  simulatorStore.selectSkill(name)
+  getSimulatorStore().selectSkill(name)
 }
 
 const showGrid = computed(() => {
-  return variantStore.active === 'frontend' || variantStore.active === 'fullstack'
+  const active = getVariantStore().active
+  return active === 'frontend' || active === 'fullstack'
 })
 
 const showSimulator = computed(() => {
-  return variantStore.active === 'backend' || variantStore.active === 'fullstack'
+  const active = getVariantStore().active
+  return active === 'backend' || active === 'fullstack'
 })
 
 if (import.meta.client) {
@@ -72,7 +75,7 @@ onMounted(() => {
 })
 
 watch(
-  () => variantStore.active,
+  () => getVariantStore().active,
   async () => {
     await nextTick()
     if (!bentoContainer.value || !hasEntered.value) return
@@ -95,13 +98,14 @@ watch(
 
 // Preselect first skill
 watch(skillsList, (newList) => {
-  const currentSelected = simulatorStore.selectedSkill
+  const simulator = getSimulatorStore()
+  const currentSelected = simulator.selectedSkill
   const stillExists = newList.some(s => s.name === currentSelected)
   
   if (newList.length > 0 && (!currentSelected || !stillExists)) {
     const firstSkill = newList[0]
     if (firstSkill) {
-      simulatorStore.selectSkill(firstSkill.name)
+      simulator.selectSkill(firstSkill.name)
     }
   }
 }, { immediate: true })
@@ -133,7 +137,7 @@ watch(skillsList, (newList) => {
               :icon="skill.icon"
               :tags="skill.tags"
               :experience="skill.experience"
-              :active="simulatorStore.selectedSkill === skill.name"
+              :active="getSimulatorStore().selectedSkill === skill.name"
             />
           </div>
         </div>
@@ -146,7 +150,7 @@ watch(skillsList, (newList) => {
                 <Icon v-if="selectedSkillData.icon" :name="selectedSkillData.icon" class="detail-icon" />
               </div>
               <div class="header-text">
-                <h3 class="detail-title">{{ simulatorStore.selectedSkill }}</h3>
+                <h3 class="detail-title">{{ getSimulatorStore().selectedSkill }}</h3>
               </div>
             </div>
 

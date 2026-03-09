@@ -2,7 +2,7 @@
 import { ref, computed, watch } from 'vue'
 import { useSkillsSimulatorStore } from '~/stores/skillsSimulator'
 
-const store = useSkillsSimulatorStore()
+const getStore = () => useSkillsSimulatorStore()
 
 const method = ref('GET')
 const endpoint = ref('/api/skills')
@@ -11,7 +11,7 @@ const selectedSkillName = ref('Vue 3')
 
 const methods = ['GET', 'PUT', 'DELETE', 'POST', 'PATCH']
 
-const availableSkills = computed(() => Object.keys(store.skills))
+const availableSkills = computed(() => Object.keys(getStore().skills))
 
 interface PresetEndpoint {
   method: string
@@ -41,9 +41,9 @@ function selectPreset(preset: PresetEndpoint) {
 }
 
 const statusCode = computed(() => {
-  if (!store.apiResponse) return null
+  if (!getStore().apiResponse) return null
   try {
-    const parsed = JSON.parse(store.apiResponse)
+    const parsed = JSON.parse(getStore().apiResponse)
     if (parsed.error) return parsed.status || 500
     return 200
   } catch {
@@ -72,7 +72,7 @@ const endpointDescription = computed(() => {
 })
 
 async function sendRequest() {
-  await store.simulateApiCall(method.value, endpoint.value, requestBody.value || undefined)
+  await getStore().simulateApiCall(method.value, endpoint.value, requestBody.value || undefined)
 }
 
 // Keep endpoint in sync with selected skill for dynamic routes
@@ -139,8 +139,8 @@ watch(method, (m) => {
           placeholder="/api/skills"
           readonly
         />
-        <button class="send-btn" :disabled="store.isLoading" @click="sendRequest">
-          <Icon v-if="store.isLoading" name="mdi:loading" class="spin" />
+        <button class="send-btn" :disabled="getStore().isLoading" @click="sendRequest">
+          <Icon v-if="getStore().isLoading" name="mdi:loading" class="spin" />
           <template v-else>
             <Icon name="mdi:send" class="send-icon" />
             <span>SEND</span>
@@ -164,7 +164,7 @@ watch(method, (m) => {
             {{ statusCode }} OK
           </span>
         </div>
-        <pre v-if="store.apiResponse" class="response-body">{{ store.apiResponse }}</pre>
+        <pre v-if="getStore().apiResponse" class="response-body">{{ getStore().apiResponse }}</pre>
         <div v-else class="response-empty">
           <Icon name="mdi:code-json" class="empty-icon" />
           <span>Send a request to see the response</span>

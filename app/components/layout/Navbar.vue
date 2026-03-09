@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useVariantStore } from '~/stores/variant'
 
-const variantStore = useVariantStore()
+const activeVariant = computed(() => useVariantStore().active)
 const route = useRoute()
 
 const navItems = [
@@ -66,7 +66,7 @@ function handleScroll() {
       <div class="navbar-actions">
         <span class="variant-badge">
           <span class="variant-dot" />
-          {{ variantStore.active }}
+          {{ activeVariant }}
         </span>
       </div>
     </div>

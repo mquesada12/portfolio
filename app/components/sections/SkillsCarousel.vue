@@ -6,7 +6,6 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Autoplay } from 'swiper/modules'
 import 'swiper/css'
 
-const variantStore = useVariantStore()
 const { techStack } = useVariantContent()
 
 const modules = [Autoplay]

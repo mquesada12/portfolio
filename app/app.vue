@@ -2,12 +2,12 @@
 import { useVariantStore } from "~/stores/variant";
 import { useTransitionDirection } from "~/composables/useTransitionDirection";
 
-const variantStore = useVariantStore();
+const activeVariant = computed(() => useVariantStore().active);
 const { transitionName } = useTransitionDirection();
 </script>
 
 <template>
-  <div ref="el" :class="['app-root', `variant--${variantStore.active}`]">
+  <div ref="el" :class="['app-root', `variant--${activeVariant}`]">
     <NuxtLayout>
       <NuxtPage :transition="{ name: transitionName, mode: 'out-in' }" />
     </NuxtLayout>

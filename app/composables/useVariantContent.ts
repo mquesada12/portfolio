@@ -36,10 +36,13 @@ const contentMap: Record<string, VariantContent> = {
 }
 
 export function useVariantContent() {
-  const store = useVariantStore()
+  const getStore = () => useVariantStore()
+
+  const currentVariant = computed(() => getStore().active)
 
   const content = computed(() => {
-    return contentMap[store.active] ?? contentMap.frontend
+    const variant = currentVariant.value
+    return contentMap[variant] ?? contentMap.fullstack
   })
 
   return {
