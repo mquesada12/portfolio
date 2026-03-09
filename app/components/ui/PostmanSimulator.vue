@@ -2,10 +2,7 @@
 import { ref, computed, watch } from 'vue'
 import { useSkillsSimulatorStore } from '~/stores/skillsSimulator'
 
-const getStore = () => {
-  const { $pinia } = useNuxtApp()
-  return useSkillsSimulatorStore($pinia)
-}
+const getStore = () => useSkillsSimulatorStore()
 
 const method = ref('GET')
 const endpoint = ref('/api/skills')

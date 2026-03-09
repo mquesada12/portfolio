@@ -7,14 +7,8 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const { techStack, panelDescription } = useVariantContent()
-const getVariantStore = () => {
-  const { $pinia } = useNuxtApp()
-  return useVariantStore($pinia)
-}
-const getSimulatorStore = () => {
-  const { $pinia } = useNuxtApp()
-  return useSkillsSimulatorStore($pinia)
-}
+const getVariantStore = () => useVariantStore()
+const getSimulatorStore = () => useSkillsSimulatorStore()
 const bentoContainer = ref<HTMLElement | null>(null)
 const hasEntered = ref(false)
 

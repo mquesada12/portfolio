@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { useVariantStore } from '~/stores/variant'
 
-const activeVariant = computed(() => {
-  const { $pinia } = useNuxtApp()
-  return useVariantStore($pinia).active
-})
+const activeVariant = computed(() => useVariantStore().active)
 const route = useRoute()
 
 const navItems = [

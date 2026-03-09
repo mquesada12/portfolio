@@ -3,15 +3,11 @@ import { useVariantStore } from '~/stores/variant'
 import { useVariantContent } from '~/composables/useVariantContent'
 import type { PortfolioVariant } from '~/stores/variant'
 
-const activeVariant = computed(() => {
-  const { $pinia } = useNuxtApp()
-  return useVariantStore($pinia).active
-})
+const activeVariant = computed(() => useVariantStore().active)
 const { heroTitle, roleLabel } = useVariantContent()
 
 function selectVariant(variant: PortfolioVariant) {
-  const { $pinia } = useNuxtApp()
-  useVariantStore($pinia).setVariant(variant)
+  useVariantStore().setVariant(variant)
 }
 </script>
 
