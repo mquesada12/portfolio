@@ -1,0 +1,46 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview"
+  },
+  "dependencies": {
+    "@nuxt/content": "^3.11.2",
+    "@nuxt/icon": "^2.2.1",
+    "@nuxt/image": "^2.0.0",
+    "@nuxtjs/color-mode": "^4.0.0",
+    "@nuxtjs/google-fonts": "^3.2.0",
+    "@nuxtjs/i18n": "10.2.3",
+    "@nuxtjs/seo": "^3.4.0",
+    "@nuxtjs/supabase": "^2.0.4",
+    "@nuxtjs/tailwindcss": "^6.0.0-beta.10",
+    "@pinia/nuxt": "^0.11.3",
+    "@supabase/supabase-js": "^2.98.0",
+    "@tailwindcss/postcss": "^4.2.1",
+    "@vueuse/core": "^14.2.1",
+    "@vueuse/motion": "^3.0.3",
+    "better-sqlite3": "^12.6.2",
+    "gsap": "^3.14.2",
+    "nuxt": "^4.3.1",
+    "pinia": "^3.0.4",
+    "supabase": "^2.76.15",
+    "swiper": "^12.1.2",
+    "tailwindcss": "4.0.0",
+    "vue-tsc": "^3.2.5"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3"
+    ]
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.15.2",
+    "@types/node": "^25.3.3",
+    "eslint": "^10.0.2",
+    "typescript": "^5.9.3"
+  }
+}

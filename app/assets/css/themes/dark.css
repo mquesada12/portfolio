@@ -1,0 +1,10 @@
+.dark {
+  --color-bg-primary: #1a1a1a;
+  --color-bg-secondary: #222222;
+  --color-bg-tertiary: #2a2a2a;
+  --color-text-primary: #e5e5e5;
+  --color-text-secondary: #a0a0a0;
+  --color-text-muted: #666666;
+  --color-border: #333333;
+  --color-shadow: rgba(0, 0, 0, 0.4);
+}
