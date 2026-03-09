@@ -97,18 +97,20 @@ watch(
 )
 
 // Preselect first skill
-watch(skillsList, (newList) => {
-  const simulator = getSimulatorStore()
-  const currentSelected = simulator.selectedSkill
-  const stillExists = newList.some(s => s.name === currentSelected)
-  
-  if (newList.length > 0 && (!currentSelected || !stillExists)) {
-    const firstSkill = newList[0]
-    if (firstSkill) {
-      simulator.selectSkill(firstSkill.name)
+if (import.meta.client) {
+  watch(skillsList, (newList) => {
+    const simulator = getSimulatorStore()
+    const currentSelected = simulator.selectedSkill
+    const stillExists = newList.some(s => s.name === currentSelected)
+    
+    if (newList.length > 0 && (!currentSelected || !stillExists)) {
+      const firstSkill = newList[0]
+      if (firstSkill) {
+        simulator.selectSkill(firstSkill.name)
+      }
     }
-  }
-}, { immediate: true })
+  }, { immediate: true })
+}
 </script>
 
 <template>

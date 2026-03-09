@@ -36,9 +36,19 @@ const contentMap: Record<string, VariantContent> = {
 }
 
 export function useVariantContent() {
+  const variantBridge = useState<string>('app-variant')
   const getStore = () => useVariantStore()
 
-  const currentVariant = computed(() => getStore().active)
+  const currentVariant = computed(() => {
+    // Priority 1: Nuxt Native State (bridge)
+    if (variantBridge.value) return variantBridge.value
+    // Priority 2: Pinia Store
+    try {
+      return getStore().active
+    } catch {
+      return 'fullstack'
+    }
+  })
 
   const content = computed(() => {
     const variant = currentVariant.value

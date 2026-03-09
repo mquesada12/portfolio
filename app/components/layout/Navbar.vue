@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useVariantStore } from '~/stores/variant'
 
-const activeVariant = computed(() => useVariantStore().active)
+const variantBridge = useState<string>('app-variant')
+const activeVariant = computed(() => variantBridge.value || useVariantStore().active)
 const route = useRoute()
 
 const navItems = [

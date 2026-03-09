@@ -3,8 +3,7 @@ import { useVariantStore } from "~/stores/variant";
 import { useTransitionDirection } from "~/composables/useTransitionDirection";
 
 const el = ref<HTMLElement | null>(null);
-const variantStore = useVariantStore();
-const activeVariant = computed(() => variantStore.active);
+const activeVariant = useState('app-variant');
 const { transitionName } = useTransitionDirection();
 </script>
 
