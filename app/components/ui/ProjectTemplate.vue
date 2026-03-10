@@ -14,7 +14,7 @@ withDefaults(defineProps<Props>(), {
 })
 
 const cardRef = ref<HTMLElement | null>(null)
-const { direction, isSwiping, lengthX, lengthY } = useSwipe(cardRef)
+const { direction, isSwiping: _isSwiping, lengthX: _lengthX, lengthY: _lengthY } = useSwipe(cardRef)
 
 const emit = defineEmits(['swipe'])
 
@@ -34,8 +34,8 @@ watch(direction, (d) => {
         :src="image"
         :alt="name"
         class="image-fill"
-      />
-      <div v-else class="image-placeholder"></div>
+      >
+      <div v-else class="image-placeholder"/>
     </div>
 
     <div class="project-name">

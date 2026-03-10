@@ -9,8 +9,6 @@ const endpoint = ref('/api/skills')
 const requestBody = ref('')
 const selectedSkillName = ref('Vue 3')
 
-const methods = ['GET', 'PUT', 'DELETE', 'POST', 'PATCH']
-
 const availableSkills = computed(() => Object.keys(getStore().skills))
 
 interface PresetEndpoint {
@@ -138,7 +136,7 @@ watch(method, (m) => {
           class="endpoint-input"
           placeholder="/api/skills"
           readonly
-        />
+        >
         <button class="send-btn" :disabled="getStore().isLoading" @click="sendRequest">
           <Icon v-if="getStore().isLoading" name="mdi:loading" class="spin" />
           <template v-else>

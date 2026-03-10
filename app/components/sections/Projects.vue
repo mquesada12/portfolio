@@ -64,7 +64,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section ref="sectionRef" id="projects" class="projects-section">
+  <section id="projects" ref="sectionRef" class="projects-section">
     <div ref="stripRef" class="projects-strip">
       <UiProjectTemplate
         v-for="(project, index) in projects"

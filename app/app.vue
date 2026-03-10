@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useVariantStore } from "~/stores/variant";
 import { useTransitionDirection } from "~/composables/useTransitionDirection";
 
 const el = ref<HTMLElement | null>(null);

@@ -165,7 +165,8 @@ export const useSkillsSimulatorStore = defineStore('skillsSimulator', () => {
           apiResponse.value = JSON.stringify({ message: 'Skills reset to defaults' }, null, 2)
         } else if (skills.value[skillName]) {
           const deletedSkill = { ...skills.value[skillName] }
-          delete skills.value[skillName]
+          const { [skillName]: _, ...rest } = skills.value
+          skills.value = rest
           if (selectedSkill.value === skillName) {
             selectedSkill.value = null
           }
@@ -212,8 +213,9 @@ export const useSkillsSimulatorStore = defineStore('skillsSimulator', () => {
           )
         }
       }
-    } catch (e: any) {
-      apiResponse.value = JSON.stringify({ error: e.message, status: 500 }, null, 2)
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : String(e)
+      apiResponse.value = JSON.stringify({ error: message, status: 500 }, null, 2)
     }
 
     isLoading.value = false

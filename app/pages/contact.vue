@@ -108,7 +108,7 @@ async function handleSubmit() {
                 required
                 @focus="handleFocus('name')"
                 @blur="handleBlur"
-              />
+              >
             </div>
 
             <div class="form-group" :class="{ focused: focusedField === 'email' }">
@@ -122,7 +122,7 @@ async function handleSubmit() {
                 required
                 @focus="handleFocus('email')"
                 @blur="handleBlur"
-              />
+              >
             </div>
           </div>
 
@@ -137,7 +137,7 @@ async function handleSubmit() {
               required
               @focus="handleFocus('subject')"
               @blur="handleBlur"
-            />
+            >
           </div>
 
           <div class="form-group" :class="{ focused: focusedField === 'message' }">

@@ -10,6 +10,8 @@ interface Props {
 }
 
 withDefaults(defineProps<Props>(), {
+  description: '',
+  icon: '',
   active: false,
   proficiency: 0,
   tags: () => [],

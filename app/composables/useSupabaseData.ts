@@ -1,4 +1,4 @@
-import type { Skill, JobExperience, Project, BlogArticle, RoleType } from '../types/portfolio.types'
+import type { Skill, JobExperience, Project, BlogArticle } from '../types/portfolio.types'
 import { variantToRole } from '../types/portfolio.types'
 import type { PortfolioVariant } from '../stores/variant'
 

@@ -1,6 +1,7 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="alert" :style="{ 'border-color': color }">
-    <slot></slot>
+    <slot />
   </div>
 </template>
 

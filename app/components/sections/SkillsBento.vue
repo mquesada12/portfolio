@@ -12,7 +12,7 @@ const getVariantStore = () => {
     return useVariantStore()
   } catch {
     // Fallback for SSR if context is briefly lost
-    return { active: 'fullstack' } as any
+    return { active: 'fullstack' as const }
   }
 }
 const getSimulatorStore = () => {
@@ -20,7 +20,7 @@ const getSimulatorStore = () => {
     return useSkillsSimulatorStore()
   } catch {
     // Fallback for SSR
-    return { skills: {}, selectedSkill: null, selectedSkillData: null } as any
+    return { skills: {} as Record<string, SkillMeta>, selectedSkill: null as string | null, selectedSkillData: null as SkillMeta | null, selectSkill: (_name: string) => {} }
   }
 }
 const bentoContainer = ref<HTMLElement | null>(null)

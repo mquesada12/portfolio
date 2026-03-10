@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useVariantStore } from '~/stores/variant'
 
 const variantBridge = useState<string>('app-variant')
 const activeVariant = computed(() => variantBridge.value || 'fullstack')

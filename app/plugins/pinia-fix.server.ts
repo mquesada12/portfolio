@@ -1,40 +1,24 @@
-import { setActivePinia } from 'pinia'
-import { watch } from 'vue'
+import { setActivePinia, type Pinia } from 'pinia'
 import { useVariantStore } from '~/stores/variant'
 
+/**
+ * Server-only plugin that sets the variant bridge state from the Pinia store.
+ * The SSR crash fix is handled by pinia-patched.ts + modules/pinia-ssr-fix.ts.
+ */
 export default defineNuxtPlugin({
-  name: 'pinia-fix',
-  parallel: true,
+  name: 'pinia-variant-bridge',
+  enforce: 'post', // Run after pinia-patched.ts has created the store
   setup(nuxtApp) {
-    // Use a useState bridge for the app variant class
-    // This is highly stable across SSR and avoids store access issues in root templates
     const variantBridge = useState<string>('app-variant', () => 'fullstack')
-    
+
     if (import.meta.server) {
-      // Find pinia instance through various possible paths in Nuxt 4
-      const pinia = nuxtApp.$pinia || 
-                    (nuxtApp.vueApp && nuxtApp.vueApp.config.globalProperties.$pinia) ||
-                    (nuxtApp.ssrContext && (nuxtApp.ssrContext as any).pinia)
+      const pinia = nuxtApp.$pinia as Pinia | undefined
 
       if (pinia) {
-        try {
-          setActivePinia(pinia as any)
-          
-          // Update the bridge from the store
-          const store = useVariantStore(pinia as any)
-          if (store && store.active) {
-            variantBridge.value = store.active
-          }
-        } catch (e) {
-          console.warn('[pinia-fix] Failed to initialize store on server:', e)
-        }
+        setActivePinia(pinia)
+        const store = useVariantStore(pinia)
+        variantBridge.value = store.active
       }
-    } else if (import.meta.client) {
-      // Keep bridge in sync on client
-      const store = useVariantStore()
-      watch(() => store.active, (nv) => {
-        variantBridge.value = nv
-      }, { immediate: true })
     }
   }
 })

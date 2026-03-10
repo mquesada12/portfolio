@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useVariantStore } from '~/stores/variant'
 import { useVariantContent } from '~/composables/useVariantContent'
 
 import { Swiper, SwiperSlide } from 'swiper/vue'
