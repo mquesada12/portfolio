@@ -7,8 +7,22 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const { techStack, panelDescription } = useVariantContent()
-const getVariantStore = () => useVariantStore()
-const getSimulatorStore = () => useSkillsSimulatorStore()
+const getVariantStore = () => {
+  try {
+    return useVariantStore()
+  } catch {
+    // Fallback for SSR if context is briefly lost
+    return { active: 'fullstack' } as any
+  }
+}
+const getSimulatorStore = () => {
+  try {
+    return useSkillsSimulatorStore()
+  } catch {
+    // Fallback for SSR
+    return { skills: {}, selectedSkill: null, selectedSkillData: null } as any
+  }
+}
 const bentoContainer = ref<HTMLElement | null>(null)
 const hasEntered = ref(false)
 

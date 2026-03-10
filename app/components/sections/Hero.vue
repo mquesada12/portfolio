@@ -3,8 +3,7 @@ import { useVariantStore } from '~/stores/variant'
 import { useVariantContent } from '~/composables/useVariantContent'
 import type { PortfolioVariant } from '~/stores/variant'
 
-const activeVariant = computed(() => useVariantStore().active)
-const { heroTitle, roleLabel } = useVariantContent()
+const { heroTitle, roleLabel, activeVariant } = useVariantContent()
 
 function selectVariant(variant: PortfolioVariant) {
   useVariantStore().setVariant(variant)

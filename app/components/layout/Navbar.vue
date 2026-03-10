@@ -2,7 +2,7 @@
 import { useVariantStore } from '~/stores/variant'
 
 const variantBridge = useState<string>('app-variant')
-const activeVariant = computed(() => variantBridge.value || useVariantStore().active)
+const activeVariant = computed(() => variantBridge.value || 'fullstack')
 const route = useRoute()
 
 const navItems = [

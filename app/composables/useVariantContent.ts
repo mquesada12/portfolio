@@ -56,6 +56,7 @@ export function useVariantContent() {
   })
 
   return {
+    activeVariant: currentVariant,
     content,
     heroTitle: computed(() => content.value!.heroTitle),
     roleLabel: computed(() => content.value!.roleLabel),
