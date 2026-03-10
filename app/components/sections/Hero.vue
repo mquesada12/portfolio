@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { useVariantStore } from '~/stores/variant'
 import { useVariantContent } from '~/composables/useVariantContent'
 import type { PortfolioVariant } from '~/stores/variant'
 
-const { heroTitle, roleLabel, activeVariant } = useVariantContent()
+const { heroTitle, roleLabel, activeVariant, setVariant } = useVariantContent()
 
 function selectVariant(variant: PortfolioVariant) {
-  useVariantStore().setVariant(variant)
+  setVariant(variant)
 }
 </script>
 

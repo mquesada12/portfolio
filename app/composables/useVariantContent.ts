@@ -1,5 +1,6 @@
 import { computed } from 'vue'
 import { useVariantStore } from '~/stores/variant'
+import type { PortfolioVariant } from '~/stores/variant'
 
 interface VariantContent {
   heroTitle: string
@@ -36,7 +37,7 @@ const contentMap: Record<string, VariantContent> = {
 }
 
 export function useVariantContent() {
-  const variantBridge = useState<string>('app-variant')
+  const variantBridge = useState<string>('app-variant', () => 'fullstack')
   const getStore = () => useVariantStore()
 
   const currentVariant = computed(() => {
@@ -55,8 +56,24 @@ export function useVariantContent() {
     return contentMap[variant] ?? contentMap.fullstack
   })
 
+  /**
+   * Sets the variant across both Pinia store AND the useState bridge.
+   * This keeps the CSS class on app.vue (variant--xxx) in sync.
+   */
+  function setVariant(variant: PortfolioVariant) {
+    // Update Pinia store
+    try {
+      getStore().setVariant(variant)
+    } catch {
+      // SSR fallback — store might not be available
+    }
+    // Update useState bridge (this is what app.vue reads for CSS classes)
+    variantBridge.value = variant
+  }
+
   return {
     activeVariant: currentVariant,
+    setVariant,
     content,
     heroTitle: computed(() => content.value!.heroTitle),
     roleLabel: computed(() => content.value!.roleLabel),
